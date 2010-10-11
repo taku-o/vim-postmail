@@ -1,0 +1,216 @@
+*postmail.txt* mail message posting plugin. (python required)
+
+Author:  OMI TAKU                                             *postmail-author*
+URL      http://nanasi.jp/
+email    mail@nanasi.jp
+
+INTRODUCTION                                         *postmail* *postmail.vim*
+Send 'current editing buffer', or 'selected area of text' with email.
+Most simplest usage is to execute|:Mail|command.
+
+Supported Mail Auth type is
+    - basic SMTP password Auth
+    - POP before STMP Auth
+    - Outbound Port 25 Blocking
+    - GMail
+
+This plugin needs '+python', '+iconv', '+multi_byte' and
+Python is installed, and $PATH is appropriately set.
+
+USAGE                                                 *postmail-usage* *:Mail*
+You can use|:Mail|command to send email.
+See also|postmail-example|.
+
+:[range]Mail
+        send mail message.
+        if [range] is selected, send selected text.
+        if [range] is not selected, send current buffer.
+
+:[range]Mail {to_mailaddress}
+        send mail message to {to_mailaddress}.
+        if [range] is selected, send selected text.
+        if [range] is not selected, send current buffer.
+
+:[range]Mail {to_mailaddress1} {to_mailaddress2}, {to_mailaddress3}
+        send mail message to {to_mailaddress1}, {to_mailaddress2}, and
+        {to_mailaddress2}.
+        if [range] is selected, send selected text.
+        if [range] is not selected, send current buffer.
+
+COMMAND USAGE EXAMPLE                                       *postmail-example*
+:Mail
+        send mail message.
+        message is current buffer text.
+
+:Mail mail@nanasi.jp
+        send current buffer text to 'mail@nanasi.jp' address.
+
+:6,20Mail mail@nanasi.jp
+        send from line 6 to line 20 text to 'mail@nanasi.jp' address.
+
+INSTALLATION                                                *postmail-install*
+1. Unzip postmail-vim-plugin.zip, and copy to 'plugin', 'doc' directory in
+   your 'runtimepath' directory.
+>
+    $HOME/vimfiles (Windows)
+    $HOME/.vim/ (Unix)
+<
+2. Edit 'postmail.conf' and setup mail server configuration.
+   |postmail.conf|file encoding is same with &encoding value.
+>
+    :echo &encoding
+<
+3. Execute ':helptags' command to your runtimepath 'doc' directory.
+>
+    :helptags $HOME/vimfiles/doc (Windows)
+    :helptags $HOME/.vim/doc (Unix)
+<
+CONFIGURATION                         *postmail-configuration* *postmail.conf*
+|postmail.conf|file is mail server configuration file.
+simply configuration file setup is to comment out, and replace some
+configuration setting. See postmail.conf in your plugin directory.
+
+CONFIGURATION FORMAT DETAILS                  *postmail-configuration-details*
+basic configuration format is here.
+>
+    {
+        'auth_type':'{authentic method type."None","POP",or "TLS"}' ,
+        'smtp_host':'{SMTP server host}' ,
+        'smtp_port':'{SMTP server port}' ,
+        'login_user':'{SMTP server user name}' ,
+        'login_pass':'{SMTP server user password}' ,
+        'mail_encoding':'{mail message encoding}' ,
+        'from_address':'{from address}' ,
+        'default_to_address':'{default to address}' ,
+        'default_subject':'{default mail subject}'
+    }
+<
+smtp_host
+    SMTP Server host.
+
+smtp_port
+    SMTP Server port number.
+
+login_user
+    SMTP Server user name.
+
+login_pass
+    SMTP Server user password.
+
+mail_encoding
+    Mail message encoding name.
+
+from_address
+    From email address.
+
+default_to_address
+    Default to email address value.
+
+default_subject
+    Default mail subject value.
+
+pop_host
+    POP Server host.
+
+pop_port
+    POP Server port number.
+
+pop_user
+    POP Server user name.
+
+pop_pass
+    POP Server user password.
+
+TROUBLESHOOTING                                     *postmail-troubleshooting*
+If postmail.vim occur error, or you cannot use this plugin,
+check these points.
+
+1. Vim editor version.
+   Vim editor version is 7, or higher ?
+   Run next command, and check your vim editor version.
+>
+    :version
+
+2. 'compatible' option value.
+   'compatible' option is not set ?
+   Run next command, and check your vim editor option.
+   Return value is 0 then, OK.
+>
+    :echo &compatible
+<
+3. Vim editor compile option.
+   Your Vim editor is compiled with '+python', '+iconv', '+multi_byte' ?
+   Run next command, and check your vim editor compiled option.
+   You find '+python', '+iconv', and '+multi_byte' then, OK.
+>
+    :version
+<
+   Or run next command.
+   All command result is 1 then, OK.
+>
+    :echo has("python")
+    :echo has("iconv")
+    :echo has("multi_byte")
+<
+4. Python command.
+   Python is installed, and 'python' command PATH is set ?
+   Run next command, and check your Python status.
+   Return value is 'python is installed.' then, OK.
+>
+    :python print "python is installed."
+<
+5. Python major version.
+   If you use MS-Windows, and Vim editor is compiled with '+python/dyn'
+   option, check your Python major version.
+   Run next command, and your Python version is same with supported.
+   See |python-dynamic|.
+>
+    :help python-dynamic@en
+    :!python --version
+>
+6. |postmail.conf|.
+    |postmail.conf| is correctly configured ?
+    If you do not setup |postmail.conf| then, edit |postmail.conf|.
+    |postmail.conf| file is in your vim editor plugin directory.
+    See also |postmail.conf|.
+
+7. SMTP Server authentic method type.
+   Your SMTP Server 'authentic method type' is supported ?
+   This plugin |postmail.vim| now only support 'POP Before SMTP Auth', or
+   'TLS Auth'.
+
+8. Network.
+   Check your network enviornments.
+   You can send email with other mailers ?
+
+HISTORY                                                     *postmail-history*
+0.5     2008/08/13 10:00:00
+  - Initial upload.
+
+0.5.1   2008/08/14 24:00:00
+  plugin/postmail.vim
+  - Remove document. Move to document directory.
+  - Fix error check logic, 'postmail.conf is not configured.'.
+
+  doc/postmail.txt
+  - Created.
+
+  plugin/postmail.py
+  - Send mail in background.
+
+  plugin/postmail.conf
+  - Removed.
+
+0.5.2   2008/08/16 21:00:00
+  - Change script name from 'sendmail' to 'postmail'.
+  - Change from 'Vimball' to 'zip' archive distribution.
+
+0.5.3   2008/08/19 02:00:00
+  plugin/postmail.vim
+  - Add escape code if mail_encoding is 'ISO-2022-JP'.
+
+0.6     2009/12/04 17:00:00
+  refactoring plugin, and configuration.
+  and more easy setupable.
+
+vim:tw=78:ts=8:ft=help:norl:

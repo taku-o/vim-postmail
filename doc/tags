@@ -1,0 +1,13 @@
+:Mail	postmail.txt	/*:Mail*
+postmail	postmail.txt	/*postmail*
+postmail-author	postmail.txt	/*postmail-author*
+postmail-configuration	postmail.txt	/*postmail-configuration*
+postmail-configuration-details	postmail.txt	/*postmail-configuration-details*
+postmail-example	postmail.txt	/*postmail-example*
+postmail-history	postmail.txt	/*postmail-history*
+postmail-install	postmail.txt	/*postmail-install*
+postmail-troubleshooting	postmail.txt	/*postmail-troubleshooting*
+postmail-usage	postmail.txt	/*postmail-usage*
+postmail.conf	postmail.txt	/*postmail.conf*
+postmail.txt	postmail.txt	/*postmail.txt*
+postmail.vim	postmail.txt	/*postmail.vim*
